@@ -12,7 +12,11 @@ namespace omokGame
 {
     public partial class Form1 : Form
     {
-        
+        // 수순 count
+        private int stoneCnt = 1;
+        // 수순을 그리는데 사용되는 font
+        private static readonly Font font = new Font("맑은 고딕", 10);
+
         private int margin = 40;
         private int 눈size = 30;
         private int 돌size = 28;
@@ -68,7 +72,9 @@ namespace omokGame
                     Bitmap bmp = new Bitmap("../../images/black.png");
                     g.DrawImage(bmp, r);
                 }
-       
+
+
+                DrawStoneSequence(stoneCnt++, Brushes.White, r);
                 flag = true;
                 바둑판[x, y] = STONE.black;
             }
@@ -82,11 +88,20 @@ namespace omokGame
                     g.DrawImage(bmp, r);
                 }
 
+                DrawStoneSequence(stoneCnt++, Brushes.Black, r);
                 flag = false;
                 바둑판[x, y] = STONE.white;
             }
 
             checkOmok(x, y);
+        }
+
+        private void DrawStoneSequence(int v, Brush color, Rectangle r)
+        {
+            StringFormat stringFormat = new StringFormat();
+            stringFormat.Alignment = StringAlignment.Center;
+            stringFormat.LineAlignment = StringAlignment.Center;
+            g.DrawString(v.ToString(), font, color, r, stringFormat);
         }
 
         private void 이미지ToolStripMenuItem_Click(object sender, EventArgs e)
